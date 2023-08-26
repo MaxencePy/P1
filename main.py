@@ -349,7 +349,7 @@ class MainWidget(RelativeLayout):
         if keycode[1] == 'right' and self.direction_x == -1: self.direction_x = 0
         return True
 
-class GalaxyApp(App):
+class ProjectApp(App):
     pass
 
-GalaxyApp().run()
+ProjectApp().run()
