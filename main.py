@@ -4,7 +4,7 @@ Config.set('graphics', 'height', '400')
 Config.set('graphics', 'orientation', 'landscape')
 from kivy.app import App
 from kivy.core.audio import SoundLoader
-from kivy.metrics import dp
+#from kivy.metrics import dp
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.relativelayout import RelativeLayout
@@ -51,8 +51,13 @@ class ColorQuad(Widget):
     def set_color(self, r, g, b, a=1):
         self.Color.rgba = (r, g, b, a)
 
+resolution = (Window.width, Window.height)
+def dp(value):
+    return value*900/resolution[0]
+
 Builder.load_file("menu.kv")
 class Player(Widget):
+    color = (.4, 0, .6)
     color = Data(up=(.4, 0, .6), side=(.2, 0, .3),
                  up_=(.6, .05, .1), side_=(.3, .025, .05),
                  up2=(.2, .5, .2), side2=(.1, .25, .1))
@@ -63,7 +68,6 @@ class Player(Widget):
     speed_depth = dp(1)
     direction_depth = 1
     mode = 0
-    base_y = dp(3)
     Y = dp(3)
     y_ = 1
     def __init__(self, main_widget, **kwargs): ###
@@ -86,7 +90,7 @@ class Player(Widget):
                 self.MainWidget.transform(self.pos[0]+self.size_[0]/2, self.pos[1]+self.size_[1])]
 
     def switch_mode(self):
-        self.MainWidget.offset.y.add_speed += 0.05
+        self.MainWidget.offset.y.add_speed += dp(0.05)
         self.mode = (self.mode+1)%4
         if self.mode == 0:
             self.RectangleU.set_color(*self.color.data["up"])
@@ -164,17 +168,17 @@ class MainWidget(RelativeLayout):
     perspective_point_x, perspective_point_y = NumericProperty(0), NumericProperty(0)
 
     triangles = []
-    glint = Value(value=9999, speed=25, wait=150, elements=[])
+    glint = Value(value=9999, speed=dp(25), wait=150, elements=[])
     text = Data(title_start="[color=E6331A]RetroRide[/color][color=B21980]LaserRoad[/color]",
                 title_game_over="End of the Road",
                 button_start="START",
                 button_game_over="RESTART")
     menu_title, menu_button_title = StringProperty(text.data["title_start"]),\
                                     StringProperty(text.data["button_start"])
-    perspective = Point(x=Value(speed=.6, direction=1, limit=0.1, wait=150),
-                        y=Value(speed=2, direction=0, limits=[.75, .55]))
-    offset = Point(x=Value(value=0, speed=27, direction=0, speed2=45, speed3=5),
-                  y=Value(value=0, speed=3.4, data={"speed2": 5.5}))
+    perspective = Point(x=Value(speed=dp(.6), direction=1, limit=0.1, wait=150),
+                        y=Value(speed=dp(2), direction=0, limits=[.75, .55]))
+    offset = Point(x=Value(value=0, speed=dp(27), direction=0, speed2=dp(45), speed3=dp(5)),
+                  y=Value(value=0, speed=dp(3.4), data={"speed2": dp(6)}))
 
     color = Data(line=(.7, .1, .5), tile=(.7, .1, .5), glint=(1, 1, 1, .2))
     nb_horizontal_lines, nb_vertical_lines = 9, 10-2
@@ -202,7 +206,7 @@ class MainWidget(RelativeLayout):
             self._keyboard.bind(on_key_down=self.on_keyboard_down)
             self._keyboard.bind(on_key_up=self.on_keyboard_up)
 
-        self.init_audio()
+        #self.init_audio()
         self.init_lines()
         self.init_tiles()
         self.init_landscape()
@@ -248,7 +252,7 @@ class MainWidget(RelativeLayout):
         return platform in ('linux', 'win', 'macosx')
 
     def init_audio(self):
-        self.sound_music1 = SoundLoader.load("retro.mp3")
+        self.sound_music1 = SoundLoader.load("audio/retro.mp3")
         self.sound_music1.volume = 0.5
         self.sound_music1.loop = True
         self.sound_music1.play()
@@ -287,7 +291,7 @@ class MainWidget(RelativeLayout):
             if ti_y < self.current_y_loop:
                 del self.tiles_coo[i]
         last_y = self.last_y
-        n = self.step_y < int((last_y-self.start_y)/85)
+        n = self.step_y < int((last_y-self.start_y)/80)
         if not self.state_game_over and self.state_game_has_started:
             for i in range(self.nb_tiles-len(self.tiles_coo)):
                 if n:
@@ -414,7 +418,7 @@ class MainWidget(RelativeLayout):
                                     self.width, y,
                                     *(self.lines_y[-1].points[0]+self.get_spacing_vertical_lines()*3, 0)]
 
-        coo = x, y+3
+        coo = x, y+dp(3)
         h = dp(35)+(self.height-self.perspective_point_y)/3
         self.triangles[6].points = [*coo,
                                     *(self.lines_y[0].points[0]-self.get_spacing_vertical_lines()*10, 0),
@@ -429,7 +433,7 @@ class MainWidget(RelativeLayout):
                                     0, y-1,
                                     self.width, y-1]
     def update_glint(self):
-        size = 250
+        size = dp(250)
         deca = self.width/3 + self.glint.value/4
         space = size*1.4
         x = self.glint.value - (size+space+deca)
@@ -449,8 +453,6 @@ class MainWidget(RelativeLayout):
         time_factor = min(5, dt * self.FPS)
         if self.state_game_has_started:
             if self.first_wait[0] < self.first_wait[1]: self.first_wait[0] += time_factor
-        else:
-            self.Player.Y = self.Player.base_y
 
         if not self.state_game_over:   # Quand il n'y a pas eu d'accident
             r_x, r_y = self.get_ratios()
@@ -514,6 +516,7 @@ class MainWidget(RelativeLayout):
 
         if not self.player_on_the_way() and not self.state_game_over:
             self.set_game_over()
+        self.offset.y.base_speed
 
     def on_menu_button_pressed(self):
         if self.state_game_over:
@@ -521,7 +524,7 @@ class MainWidget(RelativeLayout):
         else:
             self.set_game()
 
-class ProjectApp(App):
+class MainApp(App):
     pass
 
-ProjectApp().run()
+MainApp().run()
