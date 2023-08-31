@@ -177,7 +177,7 @@ class MainWidget(RelativeLayout):
                                     StringProperty(text.data["button_start"])
     perspective = Point(x=Value(speed=dp(.6), direction=1, limit=0.1, wait=150),
                         y=Value(speed=dp(2), direction=0, limits=[.75, .55]))
-    offset = Point(x=Value(value=0, speed=dp(22), direction=0, speed2=50, speed3=dp(5)),
+    offset = Point(x=Value(value=0, speed=dp(26), direction=0, speed2=50, speed3=dp(5)),
                   y=Value(value=0, speed=dp(3.4), data={"speed2": dp(6)}))
 
     color = Data(line=(.7, .1, .5), tile=(.7, .1, .5), glint=(1, 1, 1, .2))
