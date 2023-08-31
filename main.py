@@ -247,7 +247,7 @@ class MainWidget(RelativeLayout):
         return platform in ('linux', 'win', 'macosx')
 
     def init_audio(self):
-        self.sound_music1 = SoundLoader.load("audio/retro.mp3")
+        self.sound_music1 = SoundLoader.load("retro.mp3")
         self.sound_music1.volume = 0.5
         self.sound_music1.loop = True
         self.sound_music1.play()
