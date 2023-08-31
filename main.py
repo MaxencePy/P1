@@ -61,7 +61,7 @@ class Player(Widget):
     color = Data(up=(.4, 0, .6), side=(.2, 0, .3),
                  up_=(.6, .05, .1), side_=(.3, .025, .05),
                  up2=(.2, .5, .2), side2=(.1, .25, .1))
-    base_size = (dp(60), dp(10))
+    base_size = (dp(90), dp(17))
     base_depth = dp(30)
     depth = base_depth
     limit_depth = dp(20)
