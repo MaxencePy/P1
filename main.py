@@ -67,7 +67,7 @@ class Player(Widget):
     limit_depth = dp(20)
     speed_depth = dp(1)
     direction_depth = 1
-    mode = 2
+    mode = 0
     Y = dp(3)
     y_ = 1
     def __init__(self, main_widget, **kwargs): ###
@@ -177,7 +177,7 @@ class MainWidget(RelativeLayout):
                                     StringProperty(text.data["button_start"])
     perspective = Point(x=Value(speed=dp(.6), direction=1, limit=0.1, wait=150),
                         y=Value(speed=dp(2), direction=0, limits=[.75, .55]))
-    offset = Point(x=Value(value=0, speed=dp(27), direction=0, speed2=dp(45), speed3=dp(5)),
+    offset = Point(x=Value(value=0, speed=dp(25), direction=0, speed2=50, speed3=dp(5)),
                   y=Value(value=0, speed=dp(3.4), data={"speed2": dp(6)}))
 
     color = Data(line=(.7, .1, .5), tile=(.7, .1, .5), glint=(1, 1, 1, .2))
@@ -489,7 +489,7 @@ class MainWidget(RelativeLayout):
                     self.offset.x.limits = [self.get_spacing_vertical_lines() * (self.nb_vertical_lines / 2 - 1),
                                             -self.get_spacing_vertical_lines() * (self.nb_vertical_lines / 2 - 1)]
                     if self.offset.x.direction != 0:
-                        self.offset.x.value += self.offset.x.speed2*self.offset.x.direction
+                        self.offset.x.value += 50*self.offset.x.direction
                         if self.offset.x.value*self.offset.x.direction >= self.offset.x.get*self.offset.x.direction:
                             self.offset.x.value = self.offset.x.get
                             self.offset.x.direction = 0
