@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = FP
+title = RetroRide LaserRoad
 
 # (str) Package name
 package.name = myapp
@@ -47,7 +47,7 @@ requirements = python3==3.7.6, hostpython3==3.7.6,kivy,pillow
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = DALL·E 2023-08-31 19.45.53.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
