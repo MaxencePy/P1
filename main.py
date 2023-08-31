@@ -63,6 +63,7 @@ class Player(Widget):
     speed_depth = dp(1)
     direction_depth = 1
     mode = 0
+    base_y = dp(3)
     Y = dp(3)
     y_ = 1
     def __init__(self, main_widget, **kwargs): ###
@@ -286,7 +287,7 @@ class MainWidget(RelativeLayout):
             if ti_y < self.current_y_loop:
                 del self.tiles_coo[i]
         last_y = self.last_y
-        n = self.step_y < int((last_y-self.start_y)/100)
+        n = self.step_y < int((last_y-self.start_y)/85)
         if not self.state_game_over and self.state_game_has_started:
             for i in range(self.nb_tiles-len(self.tiles_coo)):
                 if n:
@@ -448,6 +449,8 @@ class MainWidget(RelativeLayout):
         time_factor = min(5, dt * self.FPS)
         if self.state_game_has_started:
             if self.first_wait[0] < self.first_wait[1]: self.first_wait[0] += time_factor
+        else:
+            self.Player.Y = self.Player.base_y
 
         if not self.state_game_over:   # Quand il n'y a pas eu d'accident
             r_x, r_y = self.get_ratios()
@@ -518,7 +521,7 @@ class MainWidget(RelativeLayout):
         else:
             self.set_game()
 
-class ProjectApp(App):
+class MainApp(App):
     pass
 
-ProjectApp().run()
+MainApp().run()
