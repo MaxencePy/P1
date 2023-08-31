@@ -53,7 +53,7 @@ class ColorQuad(Widget):
 
 resolution = (Window.width, Window.height)
 def dp(value):
-    return value #value*resolution[0]/900
+    return value#value*resolution[0]/900
 
 Builder.load_file("menu.kv")
 class Player(Widget):
@@ -67,7 +67,7 @@ class Player(Widget):
     limit_depth = dp(20)
     speed_depth = dp(1)
     direction_depth = 1
-    mode = 0
+    mode = 2
     Y = dp(3)
     y_ = 1
     def __init__(self, main_widget, **kwargs): ###
@@ -238,6 +238,7 @@ class MainWidget(RelativeLayout):
         self.start_y = 0
         self.step_y = 0
         self.offset.y.add_speed = 0
+        self.offset.x.direction = 0
         self.first_wait[0] = 0
         self.tiles_coo = []
         self.generate_tiles_coo()
