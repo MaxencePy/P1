@@ -524,7 +524,7 @@ class MainWidget(RelativeLayout):
         else:
             self.set_game()
 
-class MainApp(App):
+class ProjectApp(App):
     pass
 
-MainApp().run()
+ProjectApp().run()
