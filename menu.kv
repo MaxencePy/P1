@@ -1,0 +1,28 @@
+<MenuWidget>:
+	canvas.before:
+		Color:
+			rgba: .05, 0, .1, .4
+		Rectangle:
+			size: self.size
+	Label:
+		color: .9, .2, .1
+        markup: True
+		text: root.parent.menu_title
+		#text: "[color=E6331A]RetroRide[/color][color=B21980]LaserRoad[/color]"
+		outline_color: .2, .1, .4
+		outline_width: dp(5)
+
+		font_size: dp(80)
+		font_name: "fonts/Streamster.ttf"
+		bold: True
+		underline: True
+		pos_hint: {"center_x": .5, "center_y": .6}
+	Button:
+		text: root.parent.menu_button_title
+		font_size: dp(25)
+		font_name: "fonts/Eurostile.ttf"
+		pos_hint: {"center_x": .5, "center_y": .3}
+		size_hint: .2, .15
+		on_press: root.parent.on_menu_button_pressed()
+		background_normal: ''
+		background_color: .6, .1, .3, .8
