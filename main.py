@@ -53,7 +53,7 @@ class ColorQuad(Widget):
 
 resolution = (Window.width, Window.height)
 def dp(value):
-    return value*900/resolution[0]
+    return value*resolution[0]/900
 
 Builder.load_file("menu.kv")
 class Player(Widget):
