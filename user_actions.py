@@ -22,8 +22,10 @@ def on_touch_up(self, touch):
             self.offset.x.direction = 0
         elif self.offset.x.direction == -1:
             self.offset.x.direction = 0"""
-    if touch.x < self.width / 2 and self.offset.x.direction == 1:self.offset.x.direction = 0
-    elif self.offset.x.direction == -1: self.offset.x.direction = 0
+    if self.Player.mode != 2:
+        if touch.x < self.width / 2 and self.offset.x.direction == 1:
+            self.offset.x.direction = 0
+        elif self.offset.x.direction == -1: self.offset.x.direction = 0
 
 
 def on_keyboard_down(self, keyboard, keycode, text, modifiers):
